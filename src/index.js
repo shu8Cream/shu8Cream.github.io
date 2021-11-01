@@ -1,12 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {
+  BrowserRouter,
+  Route,
+  Switch,
+} from 'react-router-dom';
 import './index.css';
 import App from './App';
+import AboutMe from './AboutMe';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Route path='/' exact component={App} />
+      <Route path='/about' exact component={AboutMe} />
+    </BrowserRouter>
+    {/* <App />
+    <AboutMe /> */}
   </React.StrictMode>,
   document.getElementById('root')
 );

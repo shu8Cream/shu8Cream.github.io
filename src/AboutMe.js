@@ -31,7 +31,7 @@ import './MenuBar.css';
 
 const theme = createTheme();
 
-export default function App() {
+export default function AboutMe() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -59,31 +59,11 @@ export default function App() {
           }}
         >
           <Container maxWidth="sm">
-            <Typography
-              component="h1"
-              variant="h2"
-              align="center"
-              color="text.primary"
-              gutterBottom
-            >
-              Welcome to shu8Cream's Portfolio 
-            </Typography>
-            {/* <Typography variant="h5" align="center" color="text.secondary" paragraph>
-              Something short and leading about the collection below—its contents,
-              the creator, etc. Make it short and sweet, but not too short so folks
-              don&apos;t simply skip over it entirely.
-            </Typography> */}
-            <Stack
-              sx={{ pt: 4 }}
-              direction="row"
-              spacing={2}
-              justifyContent="center"
-            >
-              <Button variant="contained">About me</Button>
-              <Button variant="outlined">Skills</Button>
-            </Stack>
+            
+            
           </Container>
         </Box>
+        
       </main>
       {/* Footer */}
       <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
@@ -107,4 +87,4 @@ export default function App() {
   );
 }
 
-// export default App;
+// export default AboutMe;
