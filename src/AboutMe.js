@@ -5,10 +5,6 @@ import Button from '@mui/material/Button';
 import EscalatorIcon from '@mui/icons-material/Escalator';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import GitHubIcon from '@mui/icons-material/GitHub';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
@@ -16,7 +12,6 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-// import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from 'react-router-dom'
 import './MenuBar.css';
@@ -34,11 +29,9 @@ import './MenuBar.css';
 //   );
 // }
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
 const theme = createTheme();
 
-export default function Album() {
+export default function AboutMe() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -66,25 +59,8 @@ export default function Album() {
           }}
         >
           <Container maxWidth="sm">
-            <Typography
-              component="h1"
-              variant="h2"
-              align="center"
-              color="text.primary"
-              gutterBottom
-            >
-              Welcome to shu8Cream's Portfolio 
-            </Typography>
- 
-            <Stack
-              sx={{ pt: 4 }}
-              direction="row"
-              spacing={2}
-              justifyContent="center"
-            >
-              <Button variant="contained">About me</Button>
-              <Button variant="outlined">Skills</Button>
-            </Stack>
+            
+            
           </Container>
         </Box>
         
@@ -111,18 +87,4 @@ export default function Album() {
   );
 }
 
-// import logo from './logo.svg';
-// import './App.css';
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         shu8Cream First HomePage...
-//       </header>
-//     </div>
-//   );
-// }
-
-// export default App;
+// export default AboutMe;
