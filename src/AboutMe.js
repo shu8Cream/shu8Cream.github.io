@@ -13,6 +13,7 @@ import './MenuBar.css';
 const theme = createTheme();
 
 const AboutMe = () => {
+  document.title = 'AboutMe';
   return (
     <div>
       {/* Hero unit */}

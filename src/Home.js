@@ -13,6 +13,7 @@ import { Link as MuiLink } from '@mui/material'
 import './MenuBar.css';
 
 const Home = () => {
+  document.title = 'shu8Cream';
   return (
     <div>
       {/* Hero unit */}
@@ -40,7 +41,7 @@ const Home = () => {
           spacing={2}
           justifyContent="center"
         >
-          <Button variant="contained">About me</Button>
+          <Button variant="contained" component={Link} to={`${process.env.PUBLIC_URL}/about`}>About me</Button>
           <Button variant="outlined">Skills</Button>
         </Stack>
       </Container>
