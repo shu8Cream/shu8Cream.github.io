@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom'
 
 import AboutMe from './AboutMe';
+import Skills from './Skills';
 import Home from './Home';
 
 const theme = createTheme();
@@ -29,7 +30,7 @@ const App = () => {
               <Link to={`${process.env.PUBLIC_URL}/about`}>About</Link>
             </Typography>
             <Typography variant="h7" color="inherit" sx={{ my: 1, mx: 1 }} noWrap>
-              skills
+              <Link to={`${process.env.PUBLIC_URL}/skills`}>Skills</Link>
             </Typography>
           </Toolbar>
         </AppBar>
@@ -37,6 +38,7 @@ const App = () => {
       <Routes>
         <Route path={`${process.env.PUBLIC_URL}/`} element={<Home />} />
         <Route path={`${process.env.PUBLIC_URL}/about`} element={<AboutMe />} />
+        <Route path={`${process.env.PUBLIC_URL}/skills`} element={<Skills />} />
       </Routes>
     </BrowserRouter>
   );

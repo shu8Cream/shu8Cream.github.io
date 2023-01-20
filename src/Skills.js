@@ -1,32 +1,14 @@
-import React from 'react';
 import EscalatorIcon from '@mui/icons-material/Escalator';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme } from '@mui/material/styles';
-import { Link } from 'react-router-dom'
 import { Link as MuiLink } from '@mui/material' 
 
-const AboutMe = () => {
-  document.title = 'AboutMe';
+const Skills = () => {
+  document.title = 'Skills';
   return (
     <div>
-      {/* Hero unit */}
-      <Box
-        sx={{
-          bgcolor: 'background.paper',
-          pt: 8,
-          pb: 6,
-        }}
-      >
-        <Container maxWidth="sm">
-          <Typography align="center">
-            メンテナンス中...
-          </Typography>
-        </Container>
-      </Box>
       {/* Footer */}
       <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
         <Typography variant="h6" align="center" gutterBottom>
@@ -42,6 +24,5 @@ const AboutMe = () => {
       {/* End footer */}
     </div>
   );
-}
-
-export default AboutMe;
+};
+export default Skills;

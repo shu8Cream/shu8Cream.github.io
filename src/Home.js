@@ -10,7 +10,6 @@ import Container from '@mui/material/Container';
 // import Link from '@mui/material/Link';
 import { Link } from 'react-router-dom'
 import { Link as MuiLink } from '@mui/material' 
-import './MenuBar.css';
 
 const Home = () => {
   document.title = 'shu8Cream';
@@ -42,7 +41,7 @@ const Home = () => {
           justifyContent="center"
         >
           <Button variant="contained" component={Link} to={`${process.env.PUBLIC_URL}/about`}>About me</Button>
-          <Button variant="outlined">Skills</Button>
+          <Button variant="outlined" component={Link} to={`${process.env.PUBLIC_URL}/skills`}>Skills</Button>
         </Stack>
       </Container>
     </Box>
