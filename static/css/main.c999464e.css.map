@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/main.c999464e.css","mappings":"AAAA,EACI,8BACJ,CACA,kBAAY,UAAa,CAAzB,UAAY,UAAa,CACzB,yBAAmB,UAAa,CAAhC,iBAAmB,UAAa","sources":["MenuBar.css"],"sourcesContent":["a{\n    text-decoration: none!important;\n}\n:any-link { color: white }\n:any-link:active { color: white }\n"],"names":[],"sourceRoot":""}
