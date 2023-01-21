@@ -29,7 +29,14 @@ const Skills = () => {
         }}
       >
         <SkillsList title="Frontend..." category="Frontend" />
+        <br/>
         <SkillsList title="Backend..." category="Backend" />
+        <br/>
+        <SkillsList title="Infrastructure..." category="Infrastructure" />
+        <br/>
+        <SkillsList title="Database..." category="Database" />
+        <br/>
+        <SkillsList title="Language..." category="Language" />
       </Box>
       
       {/* Footer */}

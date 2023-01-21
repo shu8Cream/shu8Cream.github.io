@@ -15,8 +15,8 @@ const SkillsCard = (props) => {
       <StyledCard>
         <CardContent>
           <Grid container spacing={2} justifyContent="center">
-            <Grid item>
-              <img src={require(`${props.card.src}`)} alt={props.card.alt} height={150} width={150} />
+            <Grid item width={'auto'} height={'70%'}>
+              <img src={require(`${props.card.src}`)} alt={props.card.alt} width={'150'} height={'150'} />
             </Grid>
           </Grid>
           <Typography variant="h5" component="div">

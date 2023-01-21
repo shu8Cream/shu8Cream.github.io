@@ -19,7 +19,7 @@ const SkillsList = (props) => {
         {cardList ? (
           cardList.map((card) => {
             return (
-              <Grid item xs={4}>
+              <Grid item xs={4} key={card.id}>
                 <SkillsCard key={card.id} card={card} />
               </Grid>
             );

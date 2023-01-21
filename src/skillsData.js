@@ -26,34 +26,122 @@ export const skillsCards = [
     {
       id: 4,
       title: 'CSS',
-      body: 'a stylesheet language used to describe the presentation of a document written in HTML or XML.',
+      body: 'A stylesheet language used to describe the presentation of a document written in HTML or XML.',
       src: './img/css-3.svg',
       alt: 'CssLogo',
       category: 'Frontend'
     },
     {
       id: 5,
-      title: 'Comming soon...',
-      body: 'Comming soon...',
-      src: './img/react.svg',
-      alt: 'ReactLogo',
-      category: 'Backend'
+      title: 'jQuery',
+      body: 'A fast, small, and feature-rich JavaScript library.',
+      src: './img/jquery.svg',
+      alt: 'JQueryLogo',
+      category: 'Frontend'
     },
     {
       id: 6,
-      title: 'Comming soon...',
-      body: 'Comming soon...',
-      src: './img/react.svg',
-      alt: 'ReactLogo',
+      title: 'Node.js',
+      body: 'An open-source, cross-platform JavaScript runtime environment.',
+      src: './img/nodejs.svg',
+      alt: 'NodejsLogo',
       category: 'Backend'
     },
     {
       id: 7,
+      title: 'Express.js',
+      body: 'A minimal and flexible Node.js web application framework.',
+      src: './img/express.svg',
+      alt: 'ExpressLogo',
+      category: 'Backend'
+    },
+    {
+      id: 8,
+      title: 'AWS',
+      body: 'Amazon Web Services (AWS) is the world\'s most comprehensive and broadly adopted cloud platform.',
+      src: './img/aws.svg',
+      alt: 'AwsjsLogo',
+      category: 'Infrastructure'
+    },
+    {
+      id: 9,
+      title: 'PostgreSQL',
+      body: 'Comming soon...',
+      src: './img/postgresql.svg',
+      alt: 'PostgresLogo',
+      category: 'Database'
+    },
+    {
+      id: 10,
+      title: 'MySQL',
+      body: 'Comming soon...',
+      src: './img/mysql.svg',
+      alt: 'MysqlLogo',
+      category: 'Database'
+    },
+    {
+      id: 11,
+      title: 'Snowflake',
+      body: 'Comming soon...',
+      src: './img/snowflake-icon.svg',
+      alt: 'SnowflakeLogo',
+      category: 'Database'
+    },
+    {
+      id: 12,
+      title: 'C++',
+      body: 'Comming soon...',
+      src: './img/c-plusplus.svg',
+      alt: 'CplusLogo',
+      category: 'Language'
+    },
+    {
+      id: 13,
+      title: 'Python',
+      body: 'Comming soon...',
+      src: './img/python.svg',
+      alt: 'PythonLogo',
+      category: 'Language'
+    },
+    {
+      id: 14,
+      title: 'JavaScript',
+      body: 'Comming soon...',
+      src: './img/javascript.svg',
+      alt: 'JsLogo',
+      category: 'Language'
+    },
+    {
+      id: 15,
+      title: 'Java',
+      body: 'Comming soon...',
+      src: './img/java.svg',
+      alt: 'JavaLogo',
+      category: 'Language'
+    },
+    {
+      id: 16,
       title: 'Comming soon...',
       body: 'Comming soon...',
-      src: './img/react.svg',
-      alt: 'ReactLogo',
-      category: 'Backend'
-    }
+      src: './img/rust.svg',
+      alt: 'RustLogo',
+      category: 'Language'
+    },
+    {
+      id: 17,
+      title: 'Comming soon...',
+      body: 'Comming soon...',
+      src: './img/nodejs.svg',
+      alt: 'NodejsLogo',
+      category: 'none'
+    },
+    {
+      id: 999,
+      title: 'Comming soon...',
+      body: 'Comming soon...',
+      src: './img/nodejs.svg',
+      alt: 'NodejsLogo',
+      category: 'none'
+    },
   ];
   
