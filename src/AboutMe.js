@@ -22,7 +22,7 @@ const AboutMe = () => {
         }}
       >
         <Container maxWidth="sm">
-          <Typography align="center">
+          <Typography variant="h5" align="center" component="div">
             メンテナンス中...
           </Typography>
         </Container>
