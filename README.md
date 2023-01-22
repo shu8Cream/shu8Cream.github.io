@@ -10,4 +10,6 @@ index
    |- Home
       |- About
       |- Skills
+         |- SkillsList
+            |- SkillsCard
 ```

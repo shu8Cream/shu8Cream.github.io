@@ -18,7 +18,7 @@ import MuiLogo from './img/material-ui.svg'
 import SkillsList from './SkillsList';
 
 const Skills = () => {
-  document.title = 'Skills';
+  document.title = 'Skills | shu8Cream';
   return (
     <div>
       <Box

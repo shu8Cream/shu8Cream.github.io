@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom'
 import { Link as MuiLink } from '@mui/material' 
 
 const AboutMe = () => {
-  document.title = 'AboutMe';
+  document.title = 'AboutMe | shu8Cream';
   return (
     <div>
       {/* Hero unit */}
