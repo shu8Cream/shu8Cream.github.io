@@ -1,0 +1,312 @@
+---
+// src/components/P5Canvas.astro
+---
+<div id="p5-container" class="w-full h-[600px] bg-black rounded-lg overflow-hidden relative"></div>
+
+<script>
+  import p5 from 'p5';
+
+  const sketch = (p: p5) => {
+    // --- 変数定義 ---
+    let minSide: number;
+    let objs: any[] = []; // パーティクルを格納する配列
+    const colors = ['#ed3441', '#ffd630', '#329fe3', '#08AC7E', '#DED9DF', '#FE4D03'];
+
+    // --- クラス定義 ---
+    
+    // 1. Orb: 軌跡を描きながら広がる円
+    class Orb {
+      x: number; y: number; radius: number; maxRadius: number; rStep: number;
+      maxCircleD: number; circleD: number; isDead: boolean;
+      ang: number; angStep: number; xStep: number; yStep: number;
+      life: number; lifeSpan: number; col: any; pos: p5.Vector[]; followers: number;
+      xx: number; yy: number;
+
+      constructor(x: number, y: number) {
+        this.x = x;
+        this.y = y;
+        this.radius = 0;
+        this.maxRadius = minSide * 0.03;
+        this.rStep = p.random(1);
+        this.maxCircleD = minSide * 0.005;
+        this.circleD = minSide * 0.005;
+        this.isDead = false;
+        this.ang = p.random(10);
+        this.angStep = p.random([-1, 1]) * p.random(0.3, 0.1);
+        this.xStep = p.random([-1, 1]) * minSide * p.random(0.01) * p.random(p.random());
+        this.yStep = p.random([-1, 1]) * minSide * p.random(0.01) * p.random(p.random());
+        this.life = 0;
+        this.lifeSpan = p.int(p.random(50, 180));
+        this.col = p.random(colors);
+        this.pos = [];
+        this.pos.push(p.createVector(this.x, this.y));
+        this.followers = 10;
+        this.xx = 0; this.yy = 0;
+      }
+
+      show() {
+        this.xx = this.x + this.radius * p.cos(this.ang);
+        this.yy = this.y + this.radius * p.sin(this.ang);
+        p.push();
+        p.noStroke();
+        p.noFill();
+        p.stroke(this.col);
+        p.strokeWeight(this.circleD);
+        p.beginShape();
+        for (let i = 0; i < this.pos.length; i++) {
+          p.vertex(this.pos[i].x, this.pos[i].y);
+        }
+        p.endShape();
+        p.pop();
+      }
+
+      move() {
+        this.ang += this.angStep;
+        this.x += this.xStep;
+        this.y += this.yStep;
+        this.radius += this.rStep;
+        this.radius = p.constrain(this.radius, 0, this.maxRadius);
+        this.life++;
+        if (this.life > this.lifeSpan) {
+          this.isDead = true;
+        }
+        this.circleD = p.map(this.life, 0, this.lifeSpan, this.maxCircleD, 1);
+        this.pos.push(p.createVector(this.xx, this.yy));
+        if (this.pos.length > this.followers) {
+          this.pos.splice(0, 1);
+        }
+      }
+
+      run() {
+        this.show();
+        this.move();
+      }
+    }
+
+    // 2. Sparkle: チカチカしながら移動する点
+    class Sparkle {
+      x: number; y: number; r: number; a: number; x0: number; y0: number;
+      targetX: number; targetY: number; life: number; lifeSpan: number;
+      col: any; sw: number; isDead: boolean;
+
+      constructor(x: number, y: number) {
+        this.x = x;
+        this.y = y;
+        this.r = minSide * p.random(0.4);
+        this.a = p.random(10);
+        this.x0 = x;
+        this.y0 = y;
+        this.targetX = x + this.r * p.cos(this.a);
+        this.targetY = y + this.r * p.sin(this.a);
+        this.life = 0;
+        this.lifeSpan = p.int(p.random(50, 280));
+        this.col = p.random(colors);
+        this.sw = minSide * p.random(0.01);
+        this.isDead = false;
+      }
+
+      show() {
+        p.noFill();
+        p.strokeWeight(this.sw);
+        p.stroke(this.col);
+        if (p.random() < 0.5) {
+          p.point(this.x, this.y);
+        }
+      }
+
+      move() {
+        let nrm = p.norm(this.life, 0, this.lifeSpan);
+        this.x = p.lerp(this.x0, this.targetX, easeOutCirc(nrm));
+        this.y = p.lerp(this.y0, this.targetY, easeOutCirc(nrm));
+        this.life++;
+        if (this.life > this.lifeSpan) {
+          this.isDead = true;
+        }
+      }
+
+      run() {
+        this.show();
+        this.move();
+      }
+    }
+
+    // 3. Ripple: 広がって消える波紋
+    class Ripple {
+      x: number; y: number; life: number; lifeSpan: number; col: any;
+      maxSw: number; sw: number; d: number; maxD: number; isDead: boolean;
+
+      constructor(x: number, y: number) {
+        this.x = x;
+        this.y = y;
+        this.life = 0;
+        this.lifeSpan = p.int(p.random(50, 150));
+        this.col = p.random(colors);
+        this.maxSw = minSide * 0.005;
+        this.sw = minSide * 0.005;
+        this.d = 0;
+        this.maxD = minSide * p.random(0.1, 0.5);
+        this.isDead = false;
+      }
+
+      show() {
+        p.noFill();
+        p.stroke(this.col);
+        p.strokeWeight(this.sw);
+        p.circle(this.x, this.y, this.d);
+      }
+
+      move() {
+        this.life++;
+        if (this.life > this.lifeSpan) {
+          this.isDead = true;
+        }
+        let nrm = p.norm(this.life, 0, this.lifeSpan);
+        this.sw = p.lerp(this.maxSw, 0.1, easeOutCirc(nrm));
+        this.d = p.lerp(0, this.maxD, easeOutCirc(nrm));
+      }
+
+      run() {
+        this.show();
+        this.move();
+      }
+    }
+
+    // 4. Shapes: 回転しながら広がる図形
+    class Shapes {
+      x: number; y: number; life: number; lifeSpan: number; col: any;
+      sw: number; maxSw: number; w: number; ang: number; angStep: number;
+      shapeType: number; r: number; a: number; x0: number; y0: number;
+      targetX: number; targetY: number; isDead: boolean;
+
+      constructor(x: number, y: number) {
+        this.x = x;
+        this.y = y;
+        this.life = 0;
+        this.lifeSpan = p.int(p.random(50, 222));
+        this.col = p.random(colors);
+        this.sw = minSide * 0.005;
+        this.maxSw = minSide * 0.005;
+        this.w = minSide * p.random(0.05);
+        this.ang = p.random(10);
+        this.angStep = p.random([-1, 1]) * p.random(0.05);
+        this.shapeType = p.int(p.random(3));
+        this.r = minSide * p.random(0.4);
+        this.a = p.random(10);
+        this.x0 = x;
+        this.y0 = y;
+        this.targetX = x + this.r * p.cos(this.a);
+        this.targetY = y + this.r * p.sin(this.a);
+        this.isDead = false;
+      }
+
+      show() {
+        p.push();
+        p.translate(this.x, this.y);
+        p.rotate(this.ang);
+        p.noFill();
+        p.strokeWeight(this.sw);
+        p.stroke(this.col);
+        if (this.shapeType == 0) {
+          p.square(0, 0, this.w);
+        } else if (this.shapeType == 1) {
+          p.circle(0, 0, this.w);
+        } else if (this.shapeType == 2) {
+          p.line(0, this.w / 2, 0, -this.w / 2);
+          p.line(this.w / 2, 0, -this.w / 2, 0);
+        }
+        p.pop();
+      }
+
+      move() {
+        this.life++;
+        if (this.life > this.lifeSpan) {
+          this.isDead = true;
+        }
+        let nrm = p.norm(this.life, 0, this.lifeSpan);
+        this.x = p.lerp(this.x0, this.targetX, easeOutCirc(nrm));
+        this.y = p.lerp(this.y0, this.targetY, easeOutCirc(nrm));
+        this.sw = p.lerp(this.maxSw, 0.1, easeOutCirc(nrm));
+        this.ang += this.angStep;
+      }
+
+      run() {
+        this.show();
+        this.move();
+      }
+    }
+
+    // --- 補助関数 ---
+    function easeOutCirc(x: number) {
+      return Math.sqrt(1 - Math.pow(x - 1, 2));
+    }
+
+    function addObjs() {
+      // 画面の少し外側まで出るように範囲設定
+      let x = p.random(-0.1, 1.1) * p.width;
+      let y = p.random(-0.1, 1.1) * p.height;
+      
+      for (let i = 0; i < 20; i++) {
+        objs.push(new Orb(x, y));
+      }
+
+      for (let i = 0; i < 50; i++) {
+        objs.push(new Sparkle(x, y));
+      }
+      
+      for (let i = 0; i < 2; i++) {
+        objs.push(new Ripple(x, y));
+      }
+
+      for (let i = 0; i < 10; i++) {
+        objs.push(new Shapes(x, y));
+      }
+    }
+
+    // --- メイン Setup / Draw ---
+    p.setup = () => {
+      const container = document.getElementById('p5-container');
+      const w = container?.clientWidth || 500;
+      const h = container?.clientHeight || 500;
+      p.createCanvas(w, h);
+      
+      minSide = p.min(p.width, p.height);
+      p.rectMode(p.CENTER);
+    };
+
+    p.draw = () => {
+      p.background(0); // 黒背景
+      
+      // 全オブジェクトを描画・更新
+      for (let i of objs) {
+        i.run();
+      }
+
+      // 寿命が尽きたオブジェクトを削除 (逆順ループで安全に削除)
+      for (let i = objs.length - 1; i >= 0; i--) {
+        if (objs[i].isDead) {
+          objs.splice(i, 1);
+        }
+      }
+
+      // ランダムなタイミングで新しい花火を追加
+      // p.random([配列]) は配列の中から1つ要素を選ぶ
+      if (p.frameCount % (p.random([10, 60, 120])) == 0) {
+        addObjs();
+      }
+    };
+
+    // リサイズ処理
+    p.windowResized = () => {
+      const container = document.getElementById('p5-container');
+      if (container) {
+        p.resizeCanvas(container.clientWidth, container.clientHeight);
+        minSide = p.min(p.width, p.height);
+      }
+    }
+  };
+
+  const container = document.getElementById('p5-container');
+  if (container) {
+    new p5(sketch, container);
+  }
+</script>

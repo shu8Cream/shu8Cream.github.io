@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+/* Typographyプラグインの読み込み（ブログ用） */
+@plugin "@tailwindcss/typography";
+
+/* ここでフォントやテーマの設定もできます */
+@theme {
+  --font-sans: 'Inter', 'Noto Sans JP', sans-serif;
+  
+  /* すりガラス風デザインのためのカスタム設定などをここに追加可能です */
+}
+
+/* KaTeXの数式を白くする */
+.katex {
+  color: #e2e8f0; /* 薄いグレー（白に近い色） */
+  font-size: 1.1em; /* 少し大きくすると読みやすい */
+}
+
+/* リンク付きの数式などは青くする */
+.katex a {
+  color: #60a5fa;
+}

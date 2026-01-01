@@ -1,0 +1,54 @@
+---
+// src/pages/works/index.astro
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const works = (await getCollection('works')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<Layout title="Works | shu8Cream.dev" fullWidth={true}>
+    <h1 class="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400">
+        Works
+    </h1>
+    <p class="text-gray-400 mb-12">これまでに作成したプロダクトや実験作品</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {works.map((work) => (
+            <a href={`/works/${work.slug}`} class="group block h-full">
+                <div class="h-full rounded-2xl bg-white/5 border border-white/10 overflow-hidden transition duration-300 hover:border-purple-500/50 hover:shadow-xl hover:shadow-purple-500/10 flex flex-col">
+                    
+                    <div class="aspect-video bg-gray-800 overflow-hidden relative">
+                        {work.data.image ? (
+                            <img 
+                                src={work.data.image} 
+                                alt={work.data.title} 
+                                class="w-full h-full object-cover transition duration-500 group-hover:scale-105" 
+                            />
+                        ) : (
+                            <div class="w-full h-full flex items-center justify-center text-gray-600 font-mono">No Image</div>
+                        )}
+                        
+                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+                            <span class="text-white font-bold px-4 py-2 rounded-full border border-white/30 backdrop-blur-sm">View Details</span>
+                        </div>
+                    </div>
+
+                    <div class="p-6 flex-1 flex flex-col">
+                        <h2 class="text-xl font-bold mb-2 group-hover:text-purple-400 transition">{work.data.title}</h2>
+                        <p class="text-gray-400 text-sm mb-4 line-clamp-2 flex-1">{work.data.description}</p>
+                        
+                        <div class="flex flex-wrap gap-2 mt-auto">
+                            {work.data.tags.map(tag => (
+                                <span class="text-xs px-2 py-1 rounded bg-white/10 text-gray-300 border border-white/5">
+                                    {tag}
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </a>
+        ))}
+    </div>
+</Layout>

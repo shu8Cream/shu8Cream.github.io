@@ -1,0 +1,64 @@
+---
+// src/pages/works/[...slug].astro
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const worksEntries = await getCollection('works');
+  return worksEntries.map(entry => ({
+    params: { slug: entry.slug }, props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<Layout title={entry.data.title} fullWidth={true}>
+    <!-- <div class="max-w-4xl mx-auto"> -->
+    <div class="w-full max-w-[1920px] mx-auto px-4 lg:px-8">
+        <a href="/works" class="inline-block mb-8 text-gray-400 hover:text-white transition">
+            ← Works一覧に戻る
+        </a>
+
+        {entry.data.image && (
+            <div class="rounded-2xl overflow-hidden border border-white/10 shadow-2xl mb-10">
+                <img src={entry.data.image} alt={entry.data.title} class="w-full" />
+            </div>
+        )}
+
+        <div class="flex flex-col md:flex-row gap-10">
+            <div class="flex-1">
+                <h1 class="text-3xl md:text-4xl font-bold mb-6">{entry.data.title}</h1>
+                <div class="prose prose-invert max-w-none">
+                    <Content />
+                </div>
+            </div>
+
+            <div class="md:w-64 shrink-0 space-y-8">
+                {entry.data.link && (
+                    <a href={entry.data.link} target="_blank" rel="noopener noreferrer" class="block w-full text-center bg-white text-gray-900 font-bold py-3 px-6 rounded-xl hover:bg-purple-50 transition shadow-lg shadow-purple-500/20">
+                        Visit GitHub ↗
+                    </a>
+                )}
+
+                <div class="p-6 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm">
+                    <div class="mb-4">
+                        <h3 class="text-xs uppercase text-gray-500 font-bold tracking-wider mb-2">Release Date</h3>
+                        <p class="text-white">{entry.data.pubDate.toISOString().split('T')[0]}</p>
+                    </div>
+                    <div>
+                        <h3 class="text-xs uppercase text-gray-500 font-bold tracking-wider mb-2">Technologies</h3>
+                        <div class="flex flex-wrap gap-2">
+                            {entry.data.tags.map(tag => (
+                                <span class="px-2 py-1 rounded bg-white/10 text-sm text-gray-300 border border-white/5">
+                                    {tag}
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</Layout>
