@@ -5,6 +5,8 @@ import expressiveCode from 'astro-expressive-code';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 
+import icon from 'astro-icon';
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://shu8Cream.github.io',
@@ -20,8 +22,7 @@ export default defineConfig({
         // 角丸の調整などもここでできます（お好みで）
         borderRadius: '0.5rem',
       }
-    }),
-  ],
+    }), icon()],
   
   markdown: {
     remarkPlugins: [remarkMath],

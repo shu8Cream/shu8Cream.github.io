@@ -2,6 +2,7 @@
 // src/pages/blog/[...slug].astro
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection('blog');
@@ -35,9 +36,32 @@ const { Content, headings } = await entry.render();
                         ))}
                     </div>
                     <h1 class="text-3xl md:text-5xl font-bold mb-4 leading-tight">{entry.data.title}</h1>
-                    <p class="text-gray-400">
-                        {entry.data.pubDate.toLocaleDateString('ja-JP')}
-                    </p>
+                    <!-- <div class="text-gray-400 flex flex-wrap justify-center gap-4">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs uppercase tracking-wider opacity-70">Published</span>
+                            <time>{entry.data.pubDate.toLocaleDateString('ja-JP')}</time>
+                        </div>
+
+                        {entry.data.updatedDate && (
+                            <div class="flex items-center gap-2 text-purple-300">
+                                <span class="text-xs uppercase tracking-wider opacity-70">Updated</span>
+                                <time>{entry.data.updatedDate.toLocaleDateString('ja-JP')}</time>
+                            </div>
+                        )}
+                    </div> -->
+                    <div class="text-gray-400 flex flex-wrap justify-center items-center gap-6 text-sm mt-2">
+                        <div class="flex items-center gap-2" title="公開日">
+                            <Icon name="mdi:calendar-month" class="w-5 h-5 text-gray-500" />
+                            <time>{entry.data.pubDate.toLocaleDateString('ja-JP')}</time>
+                        </div>
+
+                        {entry.data.updatedDate && (
+                            <div class="flex items-center gap-2 text-purple-300" title="更新日">
+                                <Icon name="mdi:update" class="w-5 h-5" />
+                                <time>{entry.data.updatedDate.toLocaleDateString('ja-JP')}</time>
+                            </div>
+                        )}
+                    </div>
                 </header>
 
                 <div class="p-8 md:p-10 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md">
@@ -54,13 +78,29 @@ const { Content, headings } = await entry.render();
                             目次
                         </h2>
                         <ul class="space-y-2 text-sm">
-                            {headings.map((heading) => (
-                                <li class={`${heading.depth === 3 ? 'pl-4' : ''}`}>
-                                    <a href={`#${heading.slug}`} class="block text-gray-400 hover:text-purple-400 transition-colors py-1 line-clamp-2">
-                                        {heading.text}
-                                    </a>
-                                </li>
-                            ))}
+                            {headings.map((heading) => {
+                                // 深さに応じてクラスを振り分ける
+                                let paddingClass = '';
+                                if (heading.depth === 3) paddingClass = 'pl-4';      // h3なら1段下げ
+                                else if (heading.depth === 4) paddingClass = 'pl-8'; // h4なら2段下げ
+                                else if (heading.depth >= 5) paddingClass = 'pl-12'; // h5以降は3段下げ
+
+                                return (
+                                    <li class={paddingClass}>
+                                        <a 
+                                            href={`#${heading.slug}`} 
+                                            class={`block py-1 transition-colors line-clamp-2 ${
+                                                // h2は少し大きく、h3以降は薄くするなどのメリハリをつける
+                                                heading.depth === 2 
+                                                    ? 'text-gray-300 font-medium hover:text-purple-400' 
+                                                    : 'text-gray-500 hover:text-purple-300 text-xs'
+                                            }`}
+                                        >
+                                            {heading.text}
+                                        </a>
+                                    </li>
+                                );
+                            })}
                         </ul>
                         {headings.length === 0 && (
                             <p class="text-gray-500 text-xs">目次はありません</p>

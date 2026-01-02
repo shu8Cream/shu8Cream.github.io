@@ -10,5 +10,5 @@ image: "/images/works/snow-7665066_640.jpg"
 ---
 
 ## このサイトについて
-色々な話をブログの方に記載します。
+[ブログ](https://shu8Cream.github.io/blog/0000)の方に詳細を書きました。
 画像は適当...

@@ -2,6 +2,7 @@
 // src/pages/blog/[...page].astro
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
 
 // 1. ページ分割の設定
 export async function getStaticPaths({ paginate }) {
@@ -66,9 +67,22 @@ const sortedTags = Object.keys(tagCounts).sort((a, b) => tagCounts[b] - tagCount
                                     <h2 class="text-2xl font-bold group-hover:text-purple-400 transition">
                                         {post.data.title}
                                     </h2>
-                                    <div class="text-sm text-gray-400 flex items-center gap-3 shrink-0">
-                                        <time>{post.data.pubDate.toLocaleDateString('ja-JP')}</time>
-                                        <span class="px-2 py-1 rounded bg-white/5 text-purple-300 border border-white/10 text-xs">
+                                    <div class="text-sm text-gray-400 flex flex-wrap items-start gap-3 shrink-0">
+                                        <div class="flex flex-col gap-1">
+                                            <div class="flex items-center gap-1.5" title="公開日">
+                                                <Icon name="mdi:calendar-month" class="w-4 h-4 text-gray-500" />
+                                                <time class="leading-none">{post.data.pubDate.toLocaleDateString('ja-JP')}</time>
+                                            </div>
+                                            
+                                            {post.data.updatedDate && (
+                                                <div class="flex items-center gap-1.5 text-purple-400 text-xs" title="更新日">
+                                                    <Icon name="mdi:update" class="w-3.5 h-3.5" />
+                                                    <time class="leading-none">{post.data.updatedDate.toLocaleDateString('ja-JP')}</time>
+                                                </div>
+                                            )}
+                                        </div>
+                                        
+                                        <span class="px-2 py-1 rounded bg-white/5 text-purple-300 border border-white/10 text-xs self-start mt-0.5">
                                             #{post.data.tags[0]}
                                         </span>
                                     </div>
