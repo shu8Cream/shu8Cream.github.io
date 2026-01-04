@@ -35,7 +35,7 @@ const { Content, headings } = await entry.render();
                             </a>
                         ))}
                     </div>
-                    <h1 class="text-3xl md:text-5xl font-bold mb-4 leading-tight">{entry.data.title}</h1>
+                    <h1 class="text-2xl md:text-2xl font-bold mb-4 leading-tight">{entry.data.title}</h1>
                     <!-- <div class="text-gray-400 flex flex-wrap justify-center gap-4">
                         <div class="flex items-center gap-2">
                             <span class="text-xs uppercase tracking-wider opacity-70">Published</span>
@@ -65,7 +65,7 @@ const { Content, headings } = await entry.render();
                 </header>
 
                 <div class="p-8 md:p-10 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md">
-                    <div class="prose prose-lg prose-invert max-w-none">
+                    <div class="prose prose-invert w-full !max-w-none">
                         <Content />
                     </div>
                 </div>

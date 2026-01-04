@@ -138,3 +138,15 @@
 .prose ul > li.task-list-item input[type="checkbox"]:hover {
   border-color: #c4b5fd; /* purple-300 */
 }
+
+/* 幅を広げたときの行間調整 */
+.prose {
+  line-height: 1.8; /* 行間を少し広めに確保して読みやすく */
+}
+
+/* 画像がデカくなりすぎないように制限（お好みで） */
+.prose img {
+  max-height: 600px; /* 縦幅の制限 */
+  width: auto;       /* 比率を維持 */
+  margin: 2rem auto; /* 中央寄せ */
+}
