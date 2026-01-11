@@ -62,15 +62,15 @@ const sortedTags = Object.keys(tagCounts).sort((a, b) => tagCounts[b] - tagCount
                 <div class="grid gap-6 mb-16">
                     {page.data.map((post) => (
                         <a href={`/blog/${post.slug}`} class="block group">
-                            <article class="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm transition duration-300 hover:bg-white/10 hover:border-purple-500/50 hover:shadow-lg hover:shadow-purple-500/10">
+                            <article class="p-6 glass-card transition duration-300 hover:border-purple-500/50 hover:shadow-lg hover:shadow-purple-500/10">
                                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
                                     <h2 class="text-2xl font-bold group-hover:text-purple-400 transition">
                                         {post.data.title}
                                     </h2>
-                                    <div class="text-sm text-gray-400 flex flex-wrap items-start gap-3 shrink-0">
+                                    <div class="text-sm flex flex-wrap items-start gap-3 shrink-0" style="color: var(--color-text-muted);">
                                         <div class="flex flex-col gap-1">
                                             <div class="flex items-center gap-1.5" title="公開日">
-                                                <Icon name="mdi:calendar-month" class="w-4 h-4 text-gray-500" />
+                                                <Icon name="mdi:calendar-month" class="w-4 h-4" style="color: var(--color-text-subtle);" />
                                                 <time class="leading-none">{post.data.pubDate.toLocaleDateString('ja-JP')}</time>
                                             </div>
                                             
@@ -82,12 +82,12 @@ const sortedTags = Object.keys(tagCounts).sort((a, b) => tagCounts[b] - tagCount
                                             )}
                                         </div>
                                         
-                                        <span class="px-2 py-1 rounded bg-white/5 text-purple-300 border border-white/10 text-xs self-start mt-0.5">
+                                        <span class="px-2 py-1 rounded text-purple-300 text-xs self-start mt-0.5" style="background-color: var(--glass-bg); border: 1px solid var(--glass-border);">
                                             #{post.data.tags[0]}
                                         </span>
                                     </div>
                                 </div>
-                                <p class="text-gray-300 line-clamp-2">{post.data.description}</p>
+                                <p class="line-clamp-2" style="color: var(--color-text-muted);">{post.data.description}</p>
                             </article>
                         </a>
                     ))}
@@ -115,15 +115,15 @@ const sortedTags = Object.keys(tagCounts).sort((a, b) => tagCounts[b] - tagCount
             </main>
 
             <aside class="w-full lg:w-72 shrink-0">
-                <div class="sticky top-24 p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm shadow-xl">
-                    <h2 class="text-xl font-bold mb-6 flex items-center gap-2 border-b border-white/10 pb-2">
+                <div class="sticky top-24 p-6 glass-card shadow-xl">
+                    <h2 class="text-xl font-bold mb-6 flex items-center gap-2 pb-2" style="border-bottom: 1px solid var(--glass-border);">
                         <span class="text-purple-400">#</span> Popular Tags
                     </h2>
                     <div class="flex flex-wrap gap-2">
                         {sortedTags.map(tag => (
-                            <a href={`/tags/${tag}`} class="group px-3 py-1.5 text-sm rounded-full bg-white/5 border border-white/10 text-gray-300 hover:bg-purple-500/20 hover:border-purple-500/50 hover:text-purple-300 transition flex items-center gap-2">
+                            <a href={`/tags/${tag}`} class="group px-3 py-1.5 text-sm rounded-full hover:bg-purple-500/20 hover:border-purple-500/50 hover:text-purple-300 transition flex items-center gap-2" style="background-color: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--color-text-muted);">
                                 <span>{tag}</span>
-                                <span class="text-xs text-gray-500 bg-black/20 px-2 py-0.5 rounded-full group-hover:text-purple-200 transition">
+                                <span class="text-xs px-2 py-0.5 rounded-full group-hover:text-purple-200 transition" style="color: var(--color-text-subtle); background-color: var(--glass-bg);">
                                     {tagCounts[tag]}
                                 </span>
                             </a>

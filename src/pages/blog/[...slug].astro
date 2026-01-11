@@ -23,14 +23,14 @@ const { Content, headings } = await entry.render();
         <div class="flex flex-col lg:flex-row gap-8">
             
             <main class="flex-1 min-w-0">
-                <a href="/blog" class="inline-block mb-8 text-gray-400 hover:text-white transition">
+                <a href="/blog" class="inline-block mb-8 transition hover:text-purple-400" style="color: var(--color-text-muted);">
                     ← ブログ一覧に戻る
                 </a>
 
                 <header class="mb-10 text-center">
                     <div class="mb-4 flex justify-center gap-2">
                         {entry.data.tags.map(tag => (
-                            <a href={`/tags/${tag}`} class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-sm text-purple-300 hover:bg-purple-500/20 transition">
+                            <a href={`/tags/${tag}`} class="px-3 py-1 rounded-full text-sm text-purple-300 hover:bg-purple-500/20 transition" style="background-color: var(--glass-bg); border: 1px solid var(--glass-border);">
                                 #{tag}
                             </a>
                         ))}
@@ -49,9 +49,9 @@ const { Content, headings } = await entry.render();
                             </div>
                         )}
                     </div> -->
-                    <div class="text-gray-400 flex flex-wrap justify-center items-center gap-6 text-sm mt-2">
+                    <div class="flex flex-wrap justify-center items-center gap-6 text-sm mt-2" style="color: var(--color-text-muted);">
                         <div class="flex items-center gap-2" title="公開日">
-                            <Icon name="mdi:calendar-month" class="w-5 h-5 text-gray-500" />
+                            <Icon name="mdi:calendar-month" class="w-5 h-5" style="color: var(--color-text-subtle);" />
                             <time>{entry.data.pubDate.toLocaleDateString('ja-JP')}</time>
                         </div>
 
@@ -64,7 +64,7 @@ const { Content, headings } = await entry.render();
                     </div>
                 </header>
 
-                <div class="p-8 md:p-10 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md">
+                <div class="p-8 md:p-10 glass-card-lg">
                     <div class="prose prose-invert w-full !max-w-none">
                         <Content />
                     </div>
@@ -73,8 +73,8 @@ const { Content, headings } = await entry.render();
 
             <aside class="w-full lg:w-64 shrink-0 hidden lg:block">
                 <div class="sticky top-24">
-                    <div class="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
-                        <h2 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">
+                    <div class="p-6 glass-card">
+                        <h2 class="text-sm font-bold uppercase tracking-wider mb-4" style="color: var(--color-text-muted);">
                             目次
                         </h2>
                         <ul class="space-y-2 text-sm">
@@ -92,9 +92,10 @@ const { Content, headings } = await entry.render();
                                             class={`block py-1 transition-colors line-clamp-2 ${
                                                 // h2は少し大きく、h3以降は薄くするなどのメリハリをつける
                                                 heading.depth === 2 
-                                                    ? 'text-gray-300 font-medium hover:text-purple-400' 
-                                                    : 'text-gray-500 hover:text-purple-300 text-xs'
+                                                    ? 'font-medium hover:text-purple-400' 
+                                                    : 'hover:text-purple-300 text-xs'
                                             }`}
+                                            style={heading.depth === 2 ? 'color: var(--color-text-muted);' : 'color: var(--color-text-subtle);'}
                                         >
                                             {heading.text}
                                         </a>
@@ -103,7 +104,7 @@ const { Content, headings } = await entry.render();
                             })}
                         </ul>
                         {headings.length === 0 && (
-                            <p class="text-gray-500 text-xs">目次はありません</p>
+                            <p class="text-xs" style="color: var(--color-text-subtle);">目次はありません</p>
                         )}
                     </div>
                 </div>

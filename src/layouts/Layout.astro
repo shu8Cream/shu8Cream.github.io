@@ -1,6 +1,8 @@
 ---
 // src/layouts/Layout.astro
 import '../styles/global.css';
+import { Icon } from 'astro-icon/components';
+
 interface Props {
 	title: string;
     fullWidth?: boolean;
@@ -23,21 +25,43 @@ const { title, fullWidth = false } = Astro.props;
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+        
+        <!-- テーマ初期化（FOUC防止） -->
+        <script is:inline>
+            const theme = localStorage.getItem('theme') || 
+                (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+            if (theme === 'light') {
+                document.documentElement.classList.add('light');
+            }
+        </script>
     </head>
-	<body class="font-sans bg-gray-950 text-white min-h-screen relative overflow-x-hidden">
+	<body class="font-sans min-h-screen relative overflow-x-hidden">
+        <!-- 背景グラデーション -->
         <div class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none">
-            <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-purple-900/30 rounded-full blur-[120px]"></div>
-            <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-900/20 rounded-full blur-[120px]"></div>
+            <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full blur-[120px]" style="background-color: var(--gradient-blob-1);"></div>
+            <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full blur-[120px]" style="background-color: var(--gradient-blob-2);"></div>
         </div>
 
-        <header class="sticky top-0 z-50 backdrop-blur-md bg-gray-900/50 border-b border-white/10">
+        <!-- ヘッダー -->
+        <header class="sticky top-0 z-50 backdrop-blur-md border-b" style="background-color: var(--glass-bg-header); border-color: var(--glass-border);">
             <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
                 <a href="/" class="font-bold text-xl tracking-tighter">shu8Cream.dev</a>
-                <nav class="flex gap-6 text-sm font-medium">
-                    <a href="/" class="hover:text-purple-400 transition-colors">Home</a>
-                    <a href="/works" class="hover:text-purple-400 transition-colors">Works</a>
-                    <a href="/blog" class="hover:text-purple-400 transition-colors">Blog</a>
-                </nav>
+                <div class="flex items-center gap-6">
+                    <nav class="flex gap-6 text-sm font-medium">
+                        <a href="/" class="hover:text-purple-400 transition-colors">Home</a>
+                        <a href="/works" class="hover:text-purple-400 transition-colors">Works</a>
+                        <a href="/blog" class="hover:text-purple-400 transition-colors">Blog</a>
+                    </nav>
+                    <!-- テーマ切り替えボタン -->
+                    <button 
+                        id="theme-toggle" 
+                        class="p-2 rounded-lg transition-colors hover:bg-white/10 dark:hover:bg-white/10"
+                        aria-label="テーマを切り替え"
+                    >
+                        <Icon name="mdi:weather-sunny" class="w-5 h-5 hidden dark:block" id="icon-sun" />
+                        <Icon name="mdi:weather-night" class="w-5 h-5 block dark:hidden" id="icon-moon" />
+                    </button>
+                </div>
             </div>
         </header>
 
@@ -45,8 +69,43 @@ const { title, fullWidth = false } = Astro.props;
             <slot />
         </div>
 
-        <footer class="text-center text-gray-500 text-sm py-8 border-t border-white/10 mt-12">
+        <footer class="text-center text-sm py-8 border-t mt-12" style="color: var(--color-text-muted); border-color: var(--glass-border);">
             &copy; {new Date().getFullYear()} shu8Cream.dev
         </footer>
+
+        <!-- テーマ切り替えスクリプト -->
+        <script>
+            const themeToggle = document.getElementById('theme-toggle');
+            
+            function updateIcons() {
+                const isLight = document.documentElement.classList.contains('light');
+                const iconSun = document.getElementById('icon-sun');
+                const iconMoon = document.getElementById('icon-moon');
+                
+                if (iconSun && iconMoon) {
+                    // ライトモード時: 月アイコン表示（クリックでダークに）
+                    // ダークモード時: 太陽アイコン表示（クリックでライトに）
+                    iconSun.style.display = isLight ? 'none' : 'block';
+                    iconMoon.style.display = isLight ? 'block' : 'none';
+                }
+            }
+            
+            themeToggle?.addEventListener('click', () => {
+                const isLight = document.documentElement.classList.toggle('light');
+                localStorage.setItem('theme', isLight ? 'light' : 'dark');
+                updateIcons();
+            });
+            
+            // 初期表示時にアイコンを更新
+            updateIcons();
+            
+            // システム設定の変更を監視
+            window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
+                if (!localStorage.getItem('theme')) {
+                    document.documentElement.classList.toggle('light', e.matches);
+                    updateIcons();
+                }
+            });
+        </script>
 	</body>
 </html>

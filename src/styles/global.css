@@ -4,13 +4,13 @@
 @plugin "@tailwindcss/typography";
 
 /* ======================================
-   デザイントークン（CSS変数）
+   デザイントークン（CSS変数）- Tailwind Theme
    ====================================== */
 @theme {
   /* フォント */
   --font-sans: 'Inter', 'Noto Sans JP', sans-serif;
   
-  /* === カラーパレット === */
+  /* === アクセントカラー（テーマ共通） === */
   
   /* Primary: Purple系（メインカラー） */
   --color-primary-300: #c4b5fd;
@@ -19,32 +19,102 @@
   
   /* Accent: Blue系（アクセントカラー） */
   --color-accent-400: #60a5fa;
+}
+
+/* ======================================
+   テーマ変数（ダークモード - デフォルト）
+   ====================================== */
+:root {
+  /* 背景 */
+  --color-bg: #030712;
+  --color-bg-secondary: #111827;
   
-  /* Neutral: Gray系（テキスト・背景） */
-  --color-neutral-200: #e2e8f0;
-  --color-neutral-400: #9ca3af;
-  --color-neutral-500: #6b7280;
+  /* テキスト */
+  --color-text: #ffffff;
+  --color-text-muted: #9ca3af;
+  --color-text-subtle: #6b7280;
   
-  /* === Glass Effect（すりガラス風） === */
+  /* グラスエフェクト */
   --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-bg-header: rgba(17, 24, 39, 0.5);
   --glass-border: rgba(255, 255, 255, 0.1);
   --glass-border-light: rgba(255, 255, 255, 0.3);
+  
+  /* 背景グラデーション */
+  --gradient-blob-1: rgba(88, 28, 135, 0.3);  /* purple-900/30 */
+  --gradient-blob-2: rgba(30, 58, 138, 0.2);  /* blue-900/20 */
+  
+  /* KaTeX */
+  --color-katex: #e2e8f0;
+  --color-katex-dark: #1e293b;
+}
+
+/* ======================================
+   テーマ変数（ライトモード）
+   ====================================== */
+:root.light {
+  /* 背景 */
+  --color-bg: #f9fafb;
+  --color-bg-secondary: #ffffff;
+  
+  /* テキスト */
+  --color-text: #111827;
+  --color-text-muted: #6b7280;
+  --color-text-subtle: #9ca3af;
+  
+  /* グラスエフェクト */
+  --glass-bg: rgba(0, 0, 0, 0.02);
+  --glass-bg-header: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-border-light: rgba(0, 0, 0, 0.15);
+  
+  /* 背景グラデーション */
+  --gradient-blob-1: rgba(233, 213, 255, 0.5);  /* purple-200/50 */
+  --gradient-blob-2: rgba(191, 219, 254, 0.4);  /* blue-200/40 */
+  
+  /* KaTeX */
+  --color-katex: #1e293b;
+}
+
+/* ======================================
+   カスタムユーティリティ
+   ====================================== */
+@layer utilities {
+  /* すりガラスカード */
+  .glass-card {
+    border-radius: 1rem;
+    border-width: 1px;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    background-color: var(--glass-bg);
+    border-color: var(--glass-border);
+  }
+  
+  /* すりガラスカード（大） */
+  .glass-card-lg {
+    border-radius: 1.5rem;
+    border-width: 1px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background-color: var(--glass-bg);
+    border-color: var(--glass-border);
+  }
 }
 
 /* ======================================
    ベーススタイル
    ====================================== */
-
-/* 全体のフォント指定 */
 body {
   font-family: var(--font-sans);
+  background-color: var(--color-bg);
+  color: var(--color-text);
 }
 
 /* ======================================
    KaTeX（数式）
    ====================================== */
 .katex {
-  color: var(--color-neutral-200);
+  color: var(--color-katex);
   font-size: 1.1em;
 }
 
@@ -61,6 +131,15 @@ body {
   word-wrap: anywhere;
   line-break: strict;
   line-height: 1.8;
+  color: var(--color-text);
+}
+
+/* ライトモード時のprose調整 */
+:root.light .prose {
+  --tw-prose-body: var(--color-text);
+  --tw-prose-headings: var(--color-text);
+  --tw-prose-bold: var(--color-text);
+  --tw-prose-code: var(--color-text);
 }
 
 /* ======================================
@@ -91,7 +170,7 @@ body {
   padding-top: 2rem;
   border-top: 1px solid var(--glass-border);
   font-size: 0.9em;
-  color: var(--color-neutral-400);
+  color: var(--color-text-muted);
 }
 
 .prose .footnotes ol {
