@@ -3,156 +3,174 @@
 /* Typographyプラグインの読み込み（ブログ用） */
 @plugin "@tailwindcss/typography";
 
-/* ここでフォントやテーマの設定もできます */
+/* ======================================
+   デザイントークン（CSS変数）
+   ====================================== */
 @theme {
+  /* フォント */
   --font-sans: 'Inter', 'Noto Sans JP', sans-serif;
   
-  /* すりガラス風デザインのためのカスタム設定などをここに追加可能です */
+  /* === カラーパレット === */
+  
+  /* Primary: Purple系（メインカラー） */
+  --color-primary-300: #c4b5fd;
+  --color-primary-400: #a78bfa;
+  --color-primary-500: #a855f7;
+  
+  /* Accent: Blue系（アクセントカラー） */
+  --color-accent-400: #60a5fa;
+  
+  /* Neutral: Gray系（テキスト・背景） */
+  --color-neutral-200: #e2e8f0;
+  --color-neutral-400: #9ca3af;
+  --color-neutral-500: #6b7280;
+  
+  /* === Glass Effect（すりガラス風） === */
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-border-light: rgba(255, 255, 255, 0.3);
 }
 
-/* KaTeXの数式を白くする */
+/* ======================================
+   ベーススタイル
+   ====================================== */
+
+/* 全体のフォント指定 */
+body {
+  font-family: var(--font-sans);
+}
+
+/* ======================================
+   KaTeX（数式）
+   ====================================== */
 .katex {
-  color: #e2e8f0; /* 薄いグレー（白に近い色） */
-  font-size: 1.1em; /* 少し大きくすると読みやすい */
+  color: var(--color-neutral-200);
+  font-size: 1.1em;
 }
 
-/* リンク付きの数式などは青くする */
 .katex a {
-  color: #60a5fa;
+  color: var(--color-accent-400);
 }
 
-/* --------------------------------------
-   記事内のリンクデザイン
-   -------------------------------------- */
+/* ======================================
+   Prose（記事本文）- 基本設定
+   ====================================== */
 .prose {
   overflow-wrap: anywhere;
   word-break: normal;
-  word-wrap: anywhere; /* 古いブラウザ向けの後方互換 */
+  word-wrap: anywhere;
   line-break: strict;
+  line-height: 1.8;
 }
-/* 記事本文(.prose)の中のリンクだけを対象にする */
+
+/* ======================================
+   Prose - リンクデザイン
+   ====================================== */
 .prose a {
-  color: #a78bfa; /* purple-400: 見やすい紫 */
-  text-decoration: none; /* 一旦下線を消す */
-  border-bottom: 1px solid rgba(167, 139, 250, 0.4); /* 薄い下線を引く */
+  color: var(--color-primary-400);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(167, 139, 250, 0.4);
   transition: all 0.2s ease;
   font-weight: 500;
 }
 
-/* ホバー時の挙動 */
 .prose a:hover {
-  color: #c4b5fd; /* purple-300: 少し明るく */
-  background-color: rgba(167, 139, 250, 0.15); /* 背景を薄く光らせる */
-  border-bottom-color: transparent; /* 下線は消す */
-  border-radius: 4px; /* 角を少し丸く */
-  padding: 0 4px; /* 少し余白を持たせる */
-  margin: 0 -4px; /* 余白分だけ位置を戻す（レイアウト崩れ防止） */
+  color: var(--color-primary-300);
+  background-color: rgba(167, 139, 250, 0.15);
+  border-bottom-color: transparent;
+  border-radius: 4px;
+  padding: 0 4px;
+  margin: 0 -4px;
 }
 
-/* --------------------------------------
-   脚注エリアのデザイン
-   -------------------------------------- */
+/* ======================================
+   Prose - 脚注エリア
+   ====================================== */
 .prose .footnotes {
-  margin-top: 4rem; /* 本文との距離をあける */
+  margin-top: 4rem;
   padding-top: 2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1); /* 区切り線を入れる */
-  font-size: 0.9em; /* 文字を少し小さく */
-  color: #9ca3af; /* gray-400: 少し薄い色に */
+  border-top: 1px solid var(--glass-border);
+  font-size: 0.9em;
+  color: var(--color-neutral-400);
 }
 
-/* 脚注リストの数字部分 */
 .prose .footnotes ol {
   padding-left: 1.5rem;
 }
 
-/* 本文中の注釈番号 [1] のデザイン */
+/* 本文中の注釈番号 [1] */
 .prose sup {
   margin-left: 2px;
 }
+
 .prose sup a {
-  color: #60a5fa; /* blue-400: 注釈は青系で区別 */
-  font-family: monospace; /* 数字っぽさを出す */
-  border: none; /* リンクの下線はなし */
+  color: var(--color-accent-400);
+  font-family: monospace;
+  border: none;
   opacity: 0.8;
 }
+
 .prose sup a:hover {
   background: none;
   opacity: 1;
   text-decoration: underline;
 }
 
-/* src/styles/global.css の末尾に追加 */
-
-/* --------------------------------------
-   Markdownテーブルの整列（左・中央・右）を修正
-   -------------------------------------- */
-/* align属性がついている場合、Tailwindのデフォルトを上書きして効かせる */
+/* ======================================
+   Prose - テーブル整列
+   ====================================== */
 .prose th[align=center], .prose td[align=center] { text-align: center; }
 .prose th[align=right], .prose td[align=right] { text-align: right; }
 .prose th[align=left], .prose td[align=left] { text-align: left; }
 
-
-/* --------------------------------------
-   チェックボックス（タスクリスト）の修正
-   -------------------------------------- */
-
-/* 1. タスクリストの「・（黒丸）」を消す */
+/* ======================================
+   Prose - チェックボックス（タスクリスト）
+   ====================================== */
 .prose ul > li.task-list-item {
   list-style-type: none;
-  display: flex; /* 横並びにする */
-  align-items: flex-start; /* 上揃え（複数行のとき崩れないように） */
-  gap: 0.5rem; /* チェックボックスと文字の間隔 */
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
   margin-left: 0;
   padding-left: 0;
 }
-/* Proseが擬似要素(::marker)で黒丸を出そうとするのを防ぐ */
+
 .prose ul > li.task-list-item::before {
   content: none !important;
 }
 
-/* 2. チェックボックス自体のデザインを整える */
 .prose ul > li.task-list-item input[type="checkbox"] {
-  /* ブラウザのデフォルトスタイルをリセット */
   appearance: none; 
   -webkit-appearance: none;
-  
-  /* サイズと配置 */
-  margin-top: 0.35rem; /* 行の高さに合わせて微調整 */
+  margin-top: 0.35rem;
   width: 1.1em;
   height: 1.1em;
-  flex-shrink: 0; /* 縮まないようにする */
-
-  /* 色と形（ダークモードに合わせてかっこよく） */
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  flex-shrink: 0;
+  border: 1px solid var(--glass-border-light);
   border-radius: 4px;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: var(--glass-bg);
   cursor: pointer;
   position: relative;
 }
 
-/* 3. チェックが入ったとき（Checked）のデザイン */
 .prose ul > li.task-list-item input[type="checkbox"]:checked {
-  background-color: #a855f7; /* 紫色 (purple-500) */
-  border-color: #a855f7;
+  background-color: var(--color-primary-500);
+  border-color: var(--color-primary-500);
   background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
 
-/* ホバー時の微調整 */
 .prose ul > li.task-list-item input[type="checkbox"]:hover {
-  border-color: #c4b5fd; /* purple-300 */
+  border-color: var(--color-primary-300);
 }
 
-/* 幅を広げたときの行間調整 */
-.prose {
-  line-height: 1.8; /* 行間を少し広めに確保して読みやすく */
-}
-
-/* 画像がデカくなりすぎないように制限（お好みで） */
+/* ======================================
+   Prose - 画像
+   ====================================== */
 .prose img {
-  max-height: 600px; /* 縦幅の制限 */
-  width: auto;       /* 比率を維持 */
-  margin: 2rem auto; /* 中央寄せ */
+  max-height: 600px;
+  width: auto;
+  margin: 2rem auto;
 }
