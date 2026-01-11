@@ -24,6 +24,12 @@
 /* --------------------------------------
    記事内のリンクデザイン
    -------------------------------------- */
+.prose {
+  overflow-wrap: anywhere;
+  word-break: normal;
+  word-wrap: anywhere; /* 古いブラウザ向けの後方互換 */
+  line-break: strict;
+}
 /* 記事本文(.prose)の中のリンクだけを対象にする */
 .prose a {
   color: #a78bfa; /* purple-400: 見やすい紫 */
