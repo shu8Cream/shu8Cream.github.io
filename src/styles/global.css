@@ -253,3 +253,22 @@ body {
   width: auto;
   margin: 2rem auto;
 }
+
+/* ======================================
+   Mermaid Diagrams
+   ====================================== */
+.mermaid {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+/* ======================================
+   Mermaid Diagrams
+   ====================================== */
+.mermaid {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}

@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 import expressiveCode from 'astro-expressive-code';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
+import { remarkMermaid } from './src/plugins/remark-mermaid.mjs';
 
 import icon from 'astro-icon';
 
@@ -25,7 +26,7 @@ export default defineConfig({
     }), icon()],
   
   markdown: {
-    remarkPlugins: [remarkMath],
+    remarkPlugins: [remarkMermaid, remarkMath],
     rehypePlugins: [rehypeKatex],
   },
 });
